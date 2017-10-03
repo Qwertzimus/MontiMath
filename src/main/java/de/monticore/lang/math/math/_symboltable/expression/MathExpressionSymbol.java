@@ -1,0 +1,94 @@
+package de.monticore.lang.math.math._symboltable.expression;
+
+import de.monticore.symboltable.CommonSymbol;
+
+/**
+ * All valid MathExpressions
+ *
+ * @author Sascha Schneiders
+ */
+public abstract class MathExpressionSymbol extends CommonSymbol {
+    public static MathExpressionSymbolKind KIND = new MathExpressionSymbolKind();
+    protected int id = -1;
+
+    public MathExpressionSymbol() {
+        super("", KIND);
+    }
+
+    public MathExpressionSymbol(String name) {
+        super(name, KIND);
+    }
+
+    //Assignments
+    public boolean isAssignmentExpression() {
+        return false;
+    }
+
+    public boolean isAssignmentDeclarationExpression() {
+        return false;
+    }
+
+    //Comparision
+    public boolean isCompareExpression() {
+        return false;
+    }
+
+    //ForLoop
+    public boolean isForLoopExpression() {
+        return false;
+    }
+
+    //Either IF/ElseIf/Else Expression
+    public boolean isConditionalExpression() {
+        return false;
+    }
+
+    //Whole If/ElseIf/Elseblock
+    public boolean isConditionalsExpression() {
+        return false;
+    }
+
+    public boolean isArithmeticExpression() {
+        return false;
+    }
+
+    public boolean isValueExpression() {
+        return false;
+    }
+
+    public boolean isMatrixExpression() {
+        return false;
+    }
+
+    public boolean isMathValueTypeExpression() {
+        return false;
+    }
+
+    public boolean isPreOperatorExpression() {
+        return false;
+    }
+
+    public boolean isParenthesisExpression() {
+        return false;
+    }
+
+    //returns text
+    public abstract String getTextualRepresentation();
+
+
+    // Can be used if other language need new MathExpressionSymbols in their handling methods,
+    // so they do not need to create new symbols
+    public int getExpressionID() {
+        return id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
+
+    public MathExpressionSymbol getRealMathExpressionSymbol(){
+        return this;
+    }
+
+    public MathExpressionSymbol getAssignedMathExpressionSymbol(){return this;}
+}
