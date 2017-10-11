@@ -34,6 +34,14 @@ public class MathMatrixArithmeticValueSymbol extends MathMatrixExpressionSymbol 
 
     }
 
+    public List<MathMatrixAccessOperatorSymbol> getVectors() {
+        return vectors;
+    }
+
+    public void setVectors(List<MathMatrixAccessOperatorSymbol> vectors) {
+        this.vectors = vectors;
+    }
+
     public void addMathMatrixAccessSymbol(MathMatrixAccessOperatorSymbol vector) {
         vectors.add(vector);
     }
