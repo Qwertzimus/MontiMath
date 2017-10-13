@@ -359,9 +359,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathArithmeticAdditionExpression astMathArithmeticAdditionExpression) {
         MathArithmeticExpressionSymbol symbol = new MathArithmeticExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticAdditionExpression.getMathArithmeticExpressions().get(0).getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticAdditionExpression.getMathArithmeticExpressions().get(1).getSymbol().get());
-        symbol.setMathOperator("+");
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticAdditionExpression.
+                getMathArithmeticExpressions().get(0), astMathArithmeticAdditionExpression.
+                getMathArithmeticExpressions().get(1), "+");
 
         addToScopeAndLinkWithNode(symbol, astMathArithmeticAdditionExpression);
     }
@@ -369,9 +369,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathArithmeticSubtractionExpression astMathArithmeticSubtractionExpression) {
         MathArithmeticExpressionSymbol symbol = new MathArithmeticExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticSubtractionExpression.getMathArithmeticExpressions().get(0).getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticSubtractionExpression.getMathArithmeticExpressions().get(1).getSymbol().get());
-        symbol.setMathOperator("-");
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticSubtractionExpression.
+                getMathArithmeticExpressions().get(0), astMathArithmeticSubtractionExpression.
+                getMathArithmeticExpressions().get(1), "-");
 
         addToScopeAndLinkWithNode(symbol, astMathArithmeticSubtractionExpression);
     }
@@ -380,9 +380,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathArithmeticMultiplicationExpression astMathArithmeticMultiplicationExpression) {
         MathArithmeticExpressionSymbol symbol = new MathArithmeticExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticMultiplicationExpression.getMathArithmeticExpressions().get(0).getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticMultiplicationExpression.getMathArithmeticExpressions().get(1).getSymbol().get());
-        symbol.setMathOperator("*");
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticMultiplicationExpression.
+                getMathArithmeticExpressions().get(0), astMathArithmeticMultiplicationExpression.
+                getMathArithmeticExpressions().get(1), "*");
 
         addToScopeAndLinkWithNode(symbol, astMathArithmeticMultiplicationExpression);
     }
@@ -391,9 +391,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathArithmeticDivisionExpression astMathArithmeticDivisionExpression) {
         MathArithmeticExpressionSymbol symbol = new MathArithmeticExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticDivisionExpression.getMathArithmeticExpressions().get(0).getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticDivisionExpression.getMathArithmeticExpressions().get(1).getSymbol().get());
-        symbol.setMathOperator("/");
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticDivisionExpression.
+                getMathArithmeticExpressions().get(0), astMathArithmeticDivisionExpression.
+                getMathArithmeticExpressions().get(1), "/");
 
         addToScopeAndLinkWithNode(symbol, astMathArithmeticDivisionExpression);
     }
@@ -401,9 +401,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathArithmeticModuloExpression astMathArithmeticModuloExpression) {
         MathArithmeticExpressionSymbol symbol = new MathArithmeticExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticModuloExpression.getMathArithmeticExpressions().get(0).getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticModuloExpression.getMathArithmeticExpressions().get(1).getSymbol().get());
-        symbol.setMathOperator("%");
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticModuloExpression.
+                getMathArithmeticExpressions().get(0), astMathArithmeticModuloExpression.
+                getMathArithmeticExpressions().get(1), "%");
 
         addToScopeAndLinkWithNode(symbol, astMathArithmeticModuloExpression);
     }
@@ -411,9 +411,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathArithmeticPowerOfExpression astMathArithmeticPowerOfExpression) {
         MathArithmeticExpressionSymbol symbol = new MathArithmeticExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticPowerOfExpression.getMathArithmeticExpressions().get(0).getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticPowerOfExpression.getMathArithmeticExpressions().get(1).getSymbol().get());
-        symbol.setMathOperator("^");
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticPowerOfExpression.
+                getMathArithmeticExpressions().get(0), astMathArithmeticPowerOfExpression.
+                getMathArithmeticExpressions().get(1), "^");
 
         addToScopeAndLinkWithNode(symbol, astMathArithmeticPowerOfExpression);
     }
@@ -422,8 +422,8 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathArithmeticIncreaseByOneExpression astMathArithmeticIncreaseByOneExpression) {
         MathArithmeticExpressionSymbol symbol = new MathArithmeticExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticIncreaseByOneExpression.getMathArithmeticExpression().getSymbol().get());
-        symbol.setMathOperator("++");
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticIncreaseByOneExpression.
+                getMathArithmeticExpression(), null, "++");
 
         addToScopeAndLinkWithNode(symbol, astMathArithmeticIncreaseByOneExpression);
     }
@@ -432,8 +432,8 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathArithmeticDecreaseByOneExpression astMathArithmeticDecreaseByOneExpression) {
         MathArithmeticExpressionSymbol symbol = new MathArithmeticExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticDecreaseByOneExpression.getMathArithmeticExpression().getSymbol().get());
-        symbol.setMathOperator("--");
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticDecreaseByOneExpression.
+                getMathArithmeticExpression(), null, "--");
 
         addToScopeAndLinkWithNode(symbol, astMathArithmeticDecreaseByOneExpression);
     }
@@ -447,10 +447,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathCompareEqualExpression astMathCompareEqualExpression) {
         MathCompareExpressionSymbol symbol = new MathCompareExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathCompareEqualExpression.getMathExpressions().get(0).getSymbol().get());
-        symbol.setCompareOperator("==");
-        symbol.setRightExpression((MathExpressionSymbol) astMathCompareEqualExpression.getMathExpressions().get(1).getSymbol().get());
-
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathCompareEqualExpression.
+                getMathExpressions().get(0), astMathCompareEqualExpression.
+                getMathExpressions().get(1), "==");
 
         addToScopeAndLinkWithNode(symbol, astMathCompareEqualExpression);
     }
@@ -459,9 +458,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathCompareGreaterEqualThanExpression astMathCompareGreaterEqualThanExpression) {
         MathCompareExpressionSymbol symbol = new MathCompareExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathCompareGreaterEqualThanExpression.getMathExpressions().get(0).getSymbol().get());
-        symbol.setCompareOperator(">=");
-        symbol.setRightExpression((MathExpressionSymbol) astMathCompareGreaterEqualThanExpression.getMathExpressions().get(1).getSymbol().get());
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathCompareGreaterEqualThanExpression.
+                getMathExpressions().get(0), astMathCompareGreaterEqualThanExpression.
+                getMathExpressions().get(1), ">=");
 
 
         addToScopeAndLinkWithNode(symbol, astMathCompareGreaterEqualThanExpression);
@@ -471,10 +470,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathCompareGreaterThanExpression astMathCompareGreaterThanExpression) {
         MathCompareExpressionSymbol symbol = new MathCompareExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathCompareGreaterThanExpression.getMathExpressions().get(0).getSymbol().get());
-        symbol.setCompareOperator(">");
-        symbol.setRightExpression((MathExpressionSymbol) astMathCompareGreaterThanExpression.getMathExpressions().get(1).getSymbol().get());
-
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathCompareGreaterThanExpression.
+                getMathExpressions().get(0), astMathCompareGreaterThanExpression.
+                getMathExpressions().get(1), ">");
 
         addToScopeAndLinkWithNode(symbol, astMathCompareGreaterThanExpression);
     }
@@ -482,10 +480,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathCompareSmallerThanExpression astMathCompareSmallerThanExpression) {
         MathCompareExpressionSymbol symbol = new MathCompareExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathCompareSmallerThanExpression.getMathExpressions().get(0).getSymbol().get());
-        symbol.setCompareOperator("<");
-        symbol.setRightExpression((MathExpressionSymbol) astMathCompareSmallerThanExpression.getMathExpressions().get(1).getSymbol().get());
-
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathCompareSmallerThanExpression.
+                getMathExpressions().get(0), astMathCompareSmallerThanExpression.
+                getMathExpressions().get(1), "<");
 
         addToScopeAndLinkWithNode(symbol, astMathCompareSmallerThanExpression);
     }
@@ -493,10 +490,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathCompareSmallerEqualThanExpression astMathCompareSmallerEqualThanExpression) {
         MathCompareExpressionSymbol symbol = new MathCompareExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathCompareSmallerEqualThanExpression.getMathExpressions().get(0).getSymbol().get());
-        symbol.setCompareOperator("<=");
-        symbol.setRightExpression((MathExpressionSymbol) astMathCompareSmallerEqualThanExpression.getMathExpressions().get(1).getSymbol().get());
-
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathCompareSmallerEqualThanExpression.
+                getMathExpressions().get(0), astMathCompareSmallerEqualThanExpression.
+                getMathExpressions().get(1), "<=");
 
         addToScopeAndLinkWithNode(symbol, astMathCompareSmallerEqualThanExpression);
     }
@@ -505,10 +501,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void endVisit(final ASTMathCompareNotEqualExpression astMathCompareNotEqualExpression) {
         MathCompareExpressionSymbol symbol = new MathCompareExpressionSymbol();
 
-        symbol.setLeftExpression((MathExpressionSymbol) astMathCompareNotEqualExpression.getMathExpressions().get(0).getSymbol().get());
-        symbol.setCompareOperator("!=");
-        symbol.setRightExpression((MathExpressionSymbol) astMathCompareNotEqualExpression.getMathExpressions().get(1).getSymbol().get());
-
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathCompareNotEqualExpression.
+                getMathExpressions().get(0), astMathCompareNotEqualExpression.
+                getMathExpressions().get(1), "!=");
 
         addToScopeAndLinkWithNode(symbol, astMathCompareNotEqualExpression);
     }
