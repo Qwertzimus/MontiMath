@@ -20,6 +20,7 @@
  */
 package de.monticore.lang.math.math._symboltable;
 
+import de.monticore.ast.ASTNode;
 import de.monticore.lang.math.math._ast.*;
 import de.monticore.lang.math.math._symboltable.expression.*;
 import de.monticore.lang.math.math._symboltable.matrix.*;
@@ -201,27 +202,26 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
 
     public void endVisit(final ASTMathArithmeticMatrixAdditionExpression astMathArithmeticMatrixAdditionExpression) {
         MathMatrixArithmeticExpressionSymbol symbol = new MathMatrixArithmeticExpressionSymbol();
-        symbol.setMathOperator("+");
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticMatrixAdditionExpression.getMathArithmeticMatrixExpressions().get(0).getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticMatrixAdditionExpression.getMathArithmeticMatrixExpressions().get(1).getSymbol().get());
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticMatrixAdditionExpression.
+                getMathArithmeticMatrixExpressions().get(0), astMathArithmeticMatrixAdditionExpression.
+                getMathArithmeticMatrixExpressions().get(1), "+");
         addToScopeAndLinkWithNode(symbol, astMathArithmeticMatrixAdditionExpression);
-
     }
 
     public void endVisit(final ASTMathArithmeticMatrixSubtractionExpression astMathArithmeticMatrixSubtractionExpression) {
         MathMatrixArithmeticExpressionSymbol symbol = new MathMatrixArithmeticExpressionSymbol();
-        symbol.setMathOperator("-");
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticMatrixSubtractionExpression.getMathArithmeticMatrixExpressions().get(0).getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticMatrixSubtractionExpression.getMathArithmeticMatrixExpressions().get(1).getSymbol().get());
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticMatrixSubtractionExpression.
+                getMathArithmeticMatrixExpressions().get(0), astMathArithmeticMatrixSubtractionExpression.
+                getMathArithmeticMatrixExpressions().get(1), "-");
         addToScopeAndLinkWithNode(symbol, astMathArithmeticMatrixSubtractionExpression);
 
     }
 
     public void endVisit(final ASTMathArithmeticMatrixMultiplicationExpression astMathArithmeticMatrixMultiplicationExpression) {
         MathMatrixArithmeticExpressionSymbol symbol = new MathMatrixArithmeticExpressionSymbol();
-        symbol.setMathOperator("*");
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticMatrixMultiplicationExpression.getMathArithmeticMatrixExpressions().get(0).getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticMatrixMultiplicationExpression.getMathArithmeticMatrixExpressions().get(1).getSymbol().get());
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticMatrixMultiplicationExpression.
+                getMathArithmeticMatrixExpressions().get(0), astMathArithmeticMatrixMultiplicationExpression.
+                getMathArithmeticMatrixExpressions().get(1), "*");
         addToScopeAndLinkWithNode(symbol, astMathArithmeticMatrixMultiplicationExpression);
     }
 
@@ -237,43 +237,43 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
 
     public void endVisit(final ASTMathArithmeticMatrixPowerOfExpression astMathArithmeticMatrixPowerOfExpression) {
         MathMatrixArithmeticExpressionSymbol symbol = new MathMatrixArithmeticExpressionSymbol();
-        symbol.setMathOperator("^");
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticMatrixPowerOfExpression.getMathArithmeticMatrixExpression().getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticMatrixPowerOfExpression.getMathValueExpression().getSymbol().get());
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticMatrixPowerOfExpression.
+                getMathArithmeticMatrixExpression(), astMathArithmeticMatrixPowerOfExpression.
+                getMathValueExpression(), "^");
         addToScopeAndLinkWithNode(symbol, astMathArithmeticMatrixPowerOfExpression);
     }
 
 
     public void endVisit(final ASTMathArithmeticMatrixEEPowerOfExpression astMathArithmeticMatrixPowerOfExpression) {
         MathMatrixArithmeticExpressionSymbol symbol = new MathMatrixArithmeticExpressionSymbol();
-        symbol.setMathOperator(".^");
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticMatrixPowerOfExpression.getMathArithmeticMatrixExpression().getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticMatrixPowerOfExpression.getMathArithmeticExpression().getSymbol().get());
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticMatrixPowerOfExpression.
+                getMathArithmeticMatrixExpression(), astMathArithmeticMatrixPowerOfExpression.
+                getMathArithmeticExpression(), ".^");
         addToScopeAndLinkWithNode(symbol, astMathArithmeticMatrixPowerOfExpression);
     }
 
     public void endVisit(final ASTMathArithmeticMatrixEEMultiplicationExpression astMathArithmeticMatrixMultiplicationExpression) {
         MathMatrixArithmeticExpressionSymbol symbol = new MathMatrixArithmeticExpressionSymbol();
-        symbol.setMathOperator(".*");
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticMatrixMultiplicationExpression.getMathArithmeticMatrixExpressions().get(0).getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticMatrixMultiplicationExpression.getMathArithmeticMatrixExpressions().get(1).getSymbol().get());
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticMatrixMultiplicationExpression.
+                getMathArithmeticMatrixExpressions().get(0), astMathArithmeticMatrixMultiplicationExpression.
+                getMathArithmeticMatrixExpressions().get(1), ".*");
         addToScopeAndLinkWithNode(symbol, astMathArithmeticMatrixMultiplicationExpression);
     }
 
 
     public void endVisit(final ASTMathArithmeticMatrixEEDivisionExpression astMathArithmeticMatrixDivisionExpression) {
         MathMatrixArithmeticExpressionSymbol symbol = new MathMatrixArithmeticExpressionSymbol();
-        symbol.setMathOperator("./");
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticMatrixDivisionExpression.getMathArithmeticMatrixExpressions().get(0).getSymbol().get());
-        symbol.setRightExpression((MathExpressionSymbol) astMathArithmeticMatrixDivisionExpression.getMathArithmeticMatrixExpressions().get(1).getSymbol().get());
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticMatrixDivisionExpression.
+                getMathArithmeticMatrixExpressions().get(0), astMathArithmeticMatrixDivisionExpression.
+                getMathArithmeticMatrixExpressions().get(1), "./");
         addToScopeAndLinkWithNode(symbol, astMathArithmeticMatrixDivisionExpression);
     }
 
     public void endVisit(final ASTMathArithmeticMatrixTransposeExpression astMathArithmeticMatrixTransposeExpression) {
         MathMatrixArithmeticExpressionSymbol symbol = new MathMatrixArithmeticExpressionSymbol();
-        symbol.setMathOperator("\'");
-        symbol.setLeftExpression((MathExpressionSymbol) astMathArithmeticMatrixTransposeExpression.getMathArithmeticMatrixExpression().getSymbol().get());
-        symbol.setRightExpression(null);
+        MathSymbolTableCreatorHelper.setOperatorLeftRightExpression(symbol, astMathArithmeticMatrixTransposeExpression.
+                getMathArithmeticMatrixExpression(), null, "\'");
+
         addToScopeAndLinkWithNode(symbol, astMathArithmeticMatrixTransposeExpression);
     }
 

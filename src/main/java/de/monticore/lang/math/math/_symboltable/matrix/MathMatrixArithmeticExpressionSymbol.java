@@ -20,12 +20,13 @@
  */
 package de.monticore.lang.math.math._symboltable.matrix;
 
+import de.monticore.lang.math.math._symboltable.expression.IArithmeticExpression;
 import de.monticore.lang.math.math._symboltable.expression.MathExpressionSymbol;
 
 /**
  * @author Sascha Schneiders
  */
-public class MathMatrixArithmeticExpressionSymbol extends MathMatrixExpressionSymbol {
+public class MathMatrixArithmeticExpressionSymbol extends MathMatrixExpressionSymbol implements IArithmeticExpression {
 
     protected MathExpressionSymbol rightExpression;
     protected MathExpressionSymbol leftExpression;
@@ -60,15 +61,24 @@ public class MathMatrixArithmeticExpressionSymbol extends MathMatrixExpressionSy
         this.mathOperator = mathOperator;
     }
 
+    public String getOperator() {
+        return getMathOperator();
+    }
+
+    public void setOperator(String operator) {
+        setMathOperator(operator);
+    }
+
     @Override
     public String getTextualRepresentation() {
         return leftExpression.getTextualRepresentation() + mathOperator + rightExpression.getTextualRepresentation();
     }
 
     @Override
-    public boolean isMatrixArithmeticExpression(){
+    public boolean isMatrixArithmeticExpression() {
         return true;
     }
+
     public boolean isAdditionOperator() {
         return mathOperator.equals("+");
     }

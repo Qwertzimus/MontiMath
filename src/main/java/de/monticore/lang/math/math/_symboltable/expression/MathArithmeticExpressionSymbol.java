@@ -23,7 +23,7 @@ package de.monticore.lang.math.math._symboltable.expression;
 /**
  * @author Sascha Schneiders
  */
-public class MathArithmeticExpressionSymbol extends MathExpressionSymbol {
+public class MathArithmeticExpressionSymbol extends MathExpressionSymbol implements IArithmeticExpression {
     protected MathExpressionSymbol rightExpression;
     protected MathExpressionSymbol leftExpression;
 
@@ -35,6 +35,16 @@ public class MathArithmeticExpressionSymbol extends MathExpressionSymbol {
 
     public MathExpressionSymbol getRightExpression() {
         return rightExpression;
+    }
+
+    @Override
+    public void setOperator(String operator) {
+        setMathOperator(operator);
+    }
+
+    @Override
+    public String getOperator() {
+        return getMathOperator();
     }
 
     public void setRightExpression(MathExpressionSymbol rightExpression) {

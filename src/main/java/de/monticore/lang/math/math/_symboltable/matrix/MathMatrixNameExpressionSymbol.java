@@ -21,11 +21,12 @@
 package de.monticore.lang.math.math._symboltable.matrix;
 
 import de.monticore.lang.math.math._ast.ASTMathMatrixNameExpression;
+import de.monticore.lang.math.math._symboltable.expression.IMathNamedExpression;
 
 /**
  * @author Sascha Schneiders
  */
-public class MathMatrixNameExpressionSymbol extends MathMatrixExpressionSymbol {
+public class MathMatrixNameExpressionSymbol extends MathMatrixExpressionSymbol implements IMathNamedExpression {
 
     protected ASTMathMatrixNameExpression astMathMatrixNameExpression;
     protected String nameToAccess;

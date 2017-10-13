@@ -23,46 +23,13 @@ package de.monticore.lang.math.math._symboltable.expression;
 /**
  * @author Sascha Schneiders
  */
-public class MathNameExpressionSymbol extends MathValueExpressionSymbol implements IMathNamedExpression {
+public interface IArithmeticExpression {
+    void setLeftExpression(MathExpressionSymbol mathExpressionSymbol);
+    void setRightExpression(MathExpressionSymbol mathExpressionSymbol);
 
-    protected String nameToResolveValue;
+    MathExpressionSymbol getLeftExpression();
+    MathExpressionSymbol getRightExpression();
 
-    public MathNameExpressionSymbol() {
-        super();
-    }
-
-    public MathNameExpressionSymbol(String nameToResolveValue) {
-        super();
-        this.nameToResolveValue = nameToResolveValue;
-    }
-
-    public void setNameToAccess(String nameToAccess) {
-        setNameToResolveValue(nameToAccess);
-    }
-
-    public String getNameToAccess() {
-        return getNameToResolveValue();
-    }
-
-    public String getNameToResolveValue() {
-        return nameToResolveValue;
-    }
-
-    public void setNameToResolveValue(String nameToResolveValue) {
-        this.nameToResolveValue = nameToResolveValue;
-    }
-
-    @Override
-    public String getTextualRepresentation() {
-        return getNameToResolveValue();
-    }
-
-    public boolean isDottedName() {
-        return nameToResolveValue.contains(".");
-    }
-
-    @Override
-    public boolean isNameExpression() {
-        return true;
-    }
+    void setOperator(String operator);
+    String getOperator();
 }
