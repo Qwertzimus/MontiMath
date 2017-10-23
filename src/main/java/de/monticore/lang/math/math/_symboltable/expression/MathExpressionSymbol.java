@@ -20,6 +20,7 @@
  */
 package de.monticore.lang.math.math._symboltable.expression;
 
+import de.monticore.lang.monticar.interfaces.TextualExpression;
 import de.monticore.symboltable.CommonSymbol;
 
 /**
@@ -27,7 +28,7 @@ import de.monticore.symboltable.CommonSymbol;
  *
  * @author Sascha Schneiders
  */
-public abstract class MathExpressionSymbol extends CommonSymbol {
+public abstract class MathExpressionSymbol extends CommonSymbol implements TextualExpression {
     public static MathExpressionSymbolKind KIND = new MathExpressionSymbolKind();
     protected int id = -1;
 
