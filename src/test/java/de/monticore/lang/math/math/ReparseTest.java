@@ -22,10 +22,7 @@ package de.monticore.lang.math.math;
 
 import de.monticore.ModelingLanguageFamily;
 import de.monticore.io.paths.ModelPath;
-import de.monticore.lang.math.math._symboltable.JSMatrix;
-import de.monticore.lang.math.math._symboltable.JSValue;
 import de.monticore.lang.math.math._symboltable.MathLanguage;
-import de.monticore.lang.math.math._symboltable.MathVariableDeclarationSymbol;
 
 import de.monticore.symboltable.GlobalScope;
 import de.monticore.symboltable.Scope;
