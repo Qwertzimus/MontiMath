@@ -55,7 +55,7 @@ grammar Math extends de.monticore.lang.monticar.Common2, siunit.monticoresiunit.
 
     MathAssignmentOperator = operator:"=" | operator:"+=" | operator:"-=" | operator:"*=" | operator:"/=";
 
-    MathConditionalExpression implements MathExpression = MathIfExpression MathElseIfExpression* MathElseExpression? ("end")?;
+    MathConditionalExpression implements MathExpression = MathIfExpression MathElseIfExpression* MathElseExpression? "end";
 
     MathConditionalExpressionShort implements MathExpression = MathExpression /*MathBooleanExpression*/ "?" trueCase:MathExpression+ ":" falseCase:MathExpression+;
 
