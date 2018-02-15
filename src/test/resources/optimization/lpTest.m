@@ -19,23 +19,23 @@
 
 package optimization;
 
-# transportation problem example (linear)
+// transportation problem example (linear)
 script lpTest
 
-# define problem
+// define problem
 Q m = 3;
 Q n = 2;
 
-# define A, b
+// define A, b
 Q^{m, 1} A = [45; 60; 35];
-Q^{n, 1} b = [50; 60};
+Q^{n, 1} b = [50; 60];
 
-# cost matrix
-Q ^{} C = [3 2; 1 5; 5 4];
+// cost matrix
+Q ^{m, n} c = [3 2; 1 5; 5 4];
 
-# minimization problem
+// minimization problem
 minimize(Q^{m, n} x)
-  C .* x;
+  c .* x;
 subject to
   sum(X, 2) == A;
   sum(X, 1) == b;
