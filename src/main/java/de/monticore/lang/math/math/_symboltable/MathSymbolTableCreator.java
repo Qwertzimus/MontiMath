@@ -660,5 +660,22 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     public void visit(ASTMathStatements ast) {
         addToScopeAndLinkWithNode(new MathStatementsSymbol("MathStatements", ast), ast);
     }
+
+    public void endVisit(final ASTMathOptimizationExpression astMathOptimizationExpression) {
+        MathOptimizationExpressionSymbol symbol = new MathOptimizationExpressionSymbol();
+        symbol.setOptimizationType(astMathOptimizationExpression.getMathOptimizationType().toString());
+        if (astMathOptimizationExpression.getMathOptimizationVariableDeclarationExpression().getSymbol().isPresent()) {
+            symbol.setOptimizationVariable((MathVariableDeclarationSymbol) astMathOptimizationExpression.getMathOptimizationVariableDeclarationExpression().getSymbol().get());
+        }
+        if (astMathOptimizationExpression.getMathOptimizationObjectiveFunctionExpression().getSymbol().isPresent()) {
+            symbol.setObjectiveExpression((MathExpressionSymbol) astMathOptimizationExpression.getMathOptimizationObjectiveFunctionExpression().getSymbol().get());
+        }
+        for (ASTMathExpression astMathExpression : astMathOptimizationExpression.getMathOptimizationConditionExpressions().getMathArithmeticExpressions()) {
+            if (astMathExpression.getSymbol().isPresent()) {
+                symbol.getSubjectToExpressions().add((MathExpressionSymbol) astMathExpression.getSymbol().get());
+            }
+            addToScopeAndLinkWithNode(symbol, astMathOptimizationExpression);
+        }
+    }
 }
 
