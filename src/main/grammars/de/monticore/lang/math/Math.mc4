@@ -182,6 +182,17 @@ grammar Math extends de.monticore.lang.monticar.Common2, de.monticore.lang.monti
 
     MathCompareGreaterEqualThanExpression implements MathExpression, Expression = MathExpression NEWLINETOKEN* ">=" NEWLINETOKEN* MathExpression;
 
+    // Optimization Statement
+    enum MathOptimizationType = MINIMIZATION: "minimize" | MAXIMIZATION: "maximize";
+
+    MathOptimizationVariableDeclarationExpression extends MathDeclarationExpression = NEWLINETOKEN* type:AssignmentType  Name NEWLINETOKEN*;
+
+    MathOptimizationObjectiveFunctionExpression implements MathExpression = (MathAssignmentDeclarationExpression | MathArithmeticExpression ";");
+
+    MathOptimizationConditionExpressions extends MathExpressionsNewLineCompatible = (NEWLINETOKEN* (MathArithmeticExpression ("<=" | "==" | ">=") MathArithmeticExpression ";") NEWLINETOKEN*)+;
+
+    MathOptimizationExpression implements MathExpression = NEWLINETOKEN* MathOptimizationType "(" MathOptimizationVariableDeclarationExpression ")" NEWLINETOKEN+ MathOptimizationObjectiveFunctionExpression NEWLINETOKEN+ "subject to" NEWLINETOKEN+ MathOptimizationConditionExpressions NEWLINETOKEN+ "end" NEWLINETOKEN*;
+
 
     //new types and general stuff
      /* Like this in grammar Common2
