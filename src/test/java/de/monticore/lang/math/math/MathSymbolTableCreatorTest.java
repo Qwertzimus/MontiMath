@@ -24,8 +24,10 @@ package de.monticore.lang.math.math;
 import de.monticore.ModelingLanguageFamily;
 import de.monticore.io.paths.ModelPath;
 import de.monticore.lang.math.math._symboltable.*;
+import de.monticore.lang.math.math._symboltable.MathOptimizationType;
 import de.monticore.lang.math.math._symboltable.expression.MathExpressionSymbol;
 import de.monticore.lang.math.math._symboltable.expression.MathNumberExpressionSymbol;
+import de.monticore.lang.math.math._symboltable.expression.MathOptimizationExpressionSymbol;
 import de.monticore.lang.math.math._symboltable.expression.MathValueSymbol;
 import de.monticore.lang.math.math._symboltable.matrix.MathMatrixArithmeticValueSymbol;
 import de.monticore.lang.math.math._symboltable.matrix.MathMatrixExpressionSymbol;
@@ -38,6 +40,7 @@ import org.junit.Test;
 
 import javax.measure.unit.Unit;
 import java.nio.file.Paths;
+import java.util.Collection;
 
 import static org.junit.Assert.*;
 
@@ -286,4 +289,34 @@ public class MathSymbolTableCreatorTest {
         GlobalScope scope = new GlobalScope(mp, fam);
         return scope;
     }
+
+    @Test
+    public void optimizationStatementTest() {
+        Scope symTab = createSymTab("src/test/resources");
+        // optimization variable
+        MathExpressionSymbol optVar = symTab.<MathValueSymbol>resolve
+                ("symtab.MinimizationTest.x", MathValueSymbol.KIND).orElse(null);
+        assertNotNull(optVar);
+        // optimization result
+        MathExpressionSymbol optRes = symTab.<MathValueSymbol>resolve
+                ("symtab.MinimizationTest.y", MathValueSymbol.KIND).orElse(null);
+        assertNotNull(optRes);
+        // check optimization expression symbol
+        Scope skript = symTab.getSubScopes().get(0);
+        Scope mathStatements = skript.getSubScopes().get(0);
+        Collection<MathOptimizationExpressionSymbol> optSymbols = mathStatements.<MathOptimizationExpressionSymbol>resolveLocally(MathOptimizationExpressionSymbol.KIND);
+        MathOptimizationExpressionSymbol optSymbol = null;
+        for (MathExpressionSymbol symbol : optSymbols) {
+            if (symbol instanceof MathOptimizationExpressionSymbol) {
+                optSymbol = (MathOptimizationExpressionSymbol) symbol;
+            }
+        }
+        assertNotNull(optSymbol);
+        assertEquals(optVar, optSymbol.getOptimizationVariable());
+        assertEquals(optRes, optSymbol.getObjectiveExpression());
+        assertTrue(optSymbol.getOptimizationType() == MathOptimizationType.MINIMIZATION);
+        assertTrue(optSymbol.getSubjectToExpressions().size() == 1);
+        assertTrue(optSymbol.getSubjectToExpressions().get(0).getTextualRepresentation().contentEquals("x<=1"));
+    }
+
 }
