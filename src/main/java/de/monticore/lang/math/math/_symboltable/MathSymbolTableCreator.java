@@ -661,21 +661,48 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
         addToScopeAndLinkWithNode(new MathStatementsSymbol("MathStatements", ast), ast);
     }
 
+    public void endVisit(final ASTMathOptimizationVariableDeclarationExpression astExpression) {
+        endVisit((ASTMathDeclarationExpression) astExpression);
+    }
+
+    public void endVisit(final ASTMathOptimizationObjectiveFunctionExpression astExpression) {
+        MathExpressionSymbol symbol = null;
+        if (astExpression.getMathAssignmentDeclarationExpression().isPresent()) {
+            if (astExpression.getMathAssignmentDeclarationExpression().get().getSymbol().isPresent()) {
+                symbol = (MathExpressionSymbol) astExpression.getMathAssignmentDeclarationExpression().get().getSymbol().get();
+            }
+        } else if (astExpression.getMathArithmeticExpression().isPresent()) {
+            if (astExpression.getMathArithmeticExpression().get().getSymbol().isPresent()) {
+                symbol = (MathExpressionSymbol) astExpression.getMathArithmeticExpression().get().getSymbol().get();
+            }
+        }
+        addToScopeAndLinkWithNode(symbol, astExpression);
+    }
+
     public void endVisit(final ASTMathOptimizationExpression astMathOptimizationExpression) {
         MathOptimizationExpressionSymbol symbol = new MathOptimizationExpressionSymbol();
         symbol.setOptimizationType(astMathOptimizationExpression.getMathOptimizationType().toString());
         if (astMathOptimizationExpression.getMathOptimizationVariableDeclarationExpression().getSymbol().isPresent()) {
-            symbol.setOptimizationVariable((MathVariableDeclarationSymbol) astMathOptimizationExpression.getMathOptimizationVariableDeclarationExpression().getSymbol().get());
+            symbol.setOptimizationVariable((MathValueSymbol) astMathOptimizationExpression.getMathOptimizationVariableDeclarationExpression().getSymbol().get());
         }
-        if (astMathOptimizationExpression.getMathOptimizationObjectiveFunctionExpression().getSymbol().isPresent()) {
-            symbol.setObjectiveExpression((MathExpressionSymbol) astMathOptimizationExpression.getMathOptimizationObjectiveFunctionExpression().getSymbol().get());
+        ASTMathOptimizationObjectiveFunctionExpression objective = astMathOptimizationExpression.getMathOptimizationObjectiveFunctionExpression();
+        if (objective.getSymbol().isPresent()) {
+            symbol.setObjectiveExpression((MathExpressionSymbol) objective.getSymbol().get());
         }
-        for (ASTMathExpression astMathExpression : astMathOptimizationExpression.getMathOptimizationConditionExpressions().getMathArithmeticExpressions()) {
-            if (astMathExpression.getSymbol().isPresent()) {
-                symbol.getSubjectToExpressions().add((MathExpressionSymbol) astMathExpression.getSymbol().get());
+        ASTMathOptimizationConditionExpressions conditions = astMathOptimizationExpression.getMathOptimizationConditionExpressions();
+        if (conditions.getMathArithmeticExpressions().size() == 2 * conditions.getMathOptimizationConditionOperators().size()) {
+            for (int i = 0; i < conditions.getMathOptimizationConditionOperators().size(); i++) {
+                if (conditions.getMathOptimizationConditionOperators().get(i).getOperator().isPresent())
+                    if (conditions.getMathArithmeticExpressions().get(i * 2).getSymbol().isPresent())
+                        if (conditions.getMathArithmeticExpressions().get(i * 2 + 1).getSymbol().isPresent()) {
+                            MathCompareExpressionSymbol conditionSymbol = new MathCompareExpressionSymbol();
+                            conditionSymbol.setOperator(conditions.getMathOptimizationConditionOperators().get(i).getOperator().get());
+                            conditionSymbol.setLeftExpression((MathExpressionSymbol) conditions.getMathArithmeticExpressions().get(i * 2).getSymbol().get());
+                            conditionSymbol.setRightExpression((MathExpressionSymbol) conditions.getMathArithmeticExpressions().get(i * 2 + 1).getSymbol().get());
+                            symbol.getSubjectToExpressions().add(conditionSymbol);
+                }
             }
-            addToScopeAndLinkWithNode(symbol, astMathOptimizationExpression);
         }
+        addToScopeAndLinkWithNode(symbol, astMathOptimizationExpression);
     }
 }
-
