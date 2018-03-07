@@ -191,7 +191,9 @@ grammar Math extends de.monticore.lang.monticar.Common2, de.monticore.lang.monti
 
     MathOptimizationConditionOperator = operator:"==" | operator:"<=" | operator:">=";
 
-    MathOptimizationConditionExpressions extends MathExpressionsNewLineCompatible implements MathExpression = (NEWLINETOKEN* (MathArithmeticExpression MathOptimizationConditionOperator MathArithmeticExpression ";") NEWLINETOKEN*)+;
+    MathOptimizationConditionExpression implements MathExpression = (leftScalar:MathArithmeticExpression | leftMatrix:MathArithmeticMatrixExpression) NEWLINETOKEN* operator:MathOptimizationConditionOperator NEWLINETOKEN* (rightScalar:MathArithmeticExpression | rightMatrix:MathArithmeticMatrixExpression) ";";
+
+    MathOptimizationConditionExpressions implements MathExpression = (NEWLINETOKEN* (MathOptimizationConditionExpression) NEWLINETOKEN*)+;
 
     MathOptimizationExpression implements MathExpression = NEWLINETOKEN* MathOptimizationType "(" MathOptimizationVariableDeclarationExpression ")" NEWLINETOKEN+ MathOptimizationObjectiveFunctionExpression NEWLINETOKEN+ "subject to" NEWLINETOKEN+ MathOptimizationConditionExpressions NEWLINETOKEN+ "end" NEWLINETOKEN*;
 
