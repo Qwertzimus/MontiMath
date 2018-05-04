@@ -39,6 +39,7 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
 
     // fields
     protected MathOptimizationExpressionSymbol minimizationTestSymbol;
+    protected MathOptimizationExpressionSymbol maximizationTestSymbol;
 
     @Override
     protected MathCoCoChecker getChecker() {
@@ -58,11 +59,13 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
     @Before
     public void setUp() throws Exception {
         minimizationTestSymbol = getMathOptimizationExpressionSymbolFromTestSkript("src/test/resources/optimization/MinimizationTest.m", 0);
+        maximizationTestSymbol = getMathOptimizationExpressionSymbolFromTestSkript("src/test/resources/optimization/MaximizationTest.m", 0);
     }
 
     @Test
     public void getOptimizationType() {
         assertEquals(minimizationTestSymbol.getOptimizationType(), MathOptimizationType.MINIMIZATION);
+        assertEquals(maximizationTestSymbol.getOptimizationType(), MathOptimizationType.MAXIMIZATION);
     }
 
     @Test

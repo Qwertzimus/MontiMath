@@ -20,7 +20,7 @@
 package optimization;
 
 // transportation problem example (linear)
-script lpTest
+script LpTest
 
 // define problem
 Q m = 3;
