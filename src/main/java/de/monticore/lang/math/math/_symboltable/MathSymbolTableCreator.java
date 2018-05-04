@@ -715,7 +715,11 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     }
 
     public void endVisit(final ASTMathOptimizationVariableDeclarationExpression astExpression) {
-        endVisit((ASTMathDeclarationExpression) astExpression);
+        // extending MathDeclarationExpression does not work because of a bug
+        // endVisit((ASTMathDeclarationExpression) astExpression);
+        MathValueSymbol symbol = new MathValueSymbol(astExpression.getName());
+        symbol.setType(MathValueType.convert(astExpression.getType()));
+        addToScopeAndLinkWithNode(symbol, astExpression);
     }
 
     public void endVisit(final ASTMathOptimizationObjectiveFunctionExpression astExpression) {
