@@ -57,7 +57,7 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
 
     @Before
     public void setUp() throws Exception {
-        minimizationTestSymbol = getMathOptimizationExpressionSymbolFromTestSkript("src/test/resources/optimization/minimizationTest.m", 0);
+        minimizationTestSymbol = getMathOptimizationExpressionSymbolFromTestSkript("src/test/resources/optimization/MinimizationTest.m", 0);
     }
 
     @Test
