@@ -17,7 +17,7 @@
  * ******************************************************************************
  */
 
-package symtab;
+package optimization;
 
 script MinimizationTest
 

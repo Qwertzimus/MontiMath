@@ -307,11 +307,11 @@ public class MathSymbolTableCreatorTest {
         Scope symTab = createSymTab("src/test/resources");
         // optimization variable
         MathExpressionSymbol optVar = symTab.<MathValueSymbol>resolve
-                ("symtab.MinimizationTest.x", MathValueSymbol.KIND).orElse(null);
+                ("optimization.MinimizationTest.x", MathValueSymbol.KIND).orElse(null);
         assertNotNull(optVar);
         // optimization result
         MathExpressionSymbol optRes = symTab.<MathValueSymbol>resolve
-                ("symtab.MinimizationTest.y", MathValueSymbol.KIND).orElse(null);
+                ("optimization.MinimizationTest.y", MathValueSymbol.KIND).orElse(null);
         assertNotNull(optRes);
         // check optimization expression symbol
         Scope skript = symTab.getSubScopes().get(0);
