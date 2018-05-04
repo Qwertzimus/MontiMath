@@ -421,7 +421,7 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
 
     public void endVisit(final ASTMathArithmeticPowerOfExpression astMathArithmeticPowerOfExpression) {
         MathExpressionSymbol newSymbol = null;
-        Log.info(((MathExpressionSymbol)astMathArithmeticPowerOfExpression.getMathArithmeticExpressions().get(0).getSymbol().get()).getTextualRepresentation(),"Whole Left Expression:");
+        Log.info(((MathExpressionSymbol) astMathArithmeticPowerOfExpression.getMathArithmeticExpressions().get(0).getSymbol().get()).getTextualRepresentation(), "Whole Left Expression:");
         if (astMathArithmeticPowerOfExpression.getMathArithmeticExpressions().get(1).getSymbol().isPresent()) {
             MathExpressionSymbol expSymbol = ((MathExpressionSymbol) astMathArithmeticPowerOfExpression.getMathArithmeticExpressions().get(1).
                     getSymbol().get()).getRealMathExpressionSymbol();
@@ -732,6 +732,32 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
         addToScopeAndLinkWithNode(symbol, astExpression);
     }
 
+    public void endVisit(final ASTMathOptimizationConditionExpression astExpression) {
+
+        MathOptimizationConditionSymbol symbol = null;
+
+        if (astExpression.getMathOptimizationSimpleConditionExpression().isPresent()) {
+            ASTMathOptimizationSimpleConditionExpression simpleExpr = astExpression.getMathOptimizationSimpleConditionExpression().get();
+            MathExpressionSymbol left = (MathExpressionSymbol) simpleExpr.getLeft().getSymbol().orElse(null);
+            MathExpressionSymbol right = (MathExpressionSymbol) simpleExpr.getRight().getSymbol().orElse(null);
+            String operator = simpleExpr.getOperator().getOperator().orElse("");
+            if ((!operator.isEmpty()) && (left != null) && (right != null)) {
+                symbol = new MathOptimizationConditionSymbol(left, operator, right);
+            }
+        } else if (astExpression.getMathOptimizationBoundsConditionExpression().isPresent()) {
+            ASTMathOptimizationBoundsConditionExpression boundExpr = astExpression.getMathOptimizationBoundsConditionExpression().get();
+            MathExpressionSymbol lower = (MathExpressionSymbol) boundExpr.getLower().getSymbol().orElse(null);
+            MathExpressionSymbol expr = (MathExpressionSymbol) boundExpr.getExpr().getSymbol().orElse(null);
+            MathExpressionSymbol upper = (MathExpressionSymbol) boundExpr.getUpper().getSymbol().orElse(null);
+            if ((lower != null) && (expr != null) && (upper != null)) {
+                symbol = new MathOptimizationConditionSymbol(lower, expr, upper);
+            }
+        }
+
+        if (symbol != null)
+            addToScopeAndLinkWithNode(symbol, astExpression);
+    }
+
     public void endVisit(final ASTMathOptimizationExpression astMathOptimizationExpression) {
         MathOptimizationExpressionSymbol symbol = new MathOptimizationExpressionSymbol();
         symbol.setOptimizationType(astMathOptimizationExpression.getMathOptimizationType().toString());
@@ -744,19 +770,9 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
         }
         ASTMathOptimizationConditionExpressions conditions = astMathOptimizationExpression.getMathOptimizationConditionExpressions();
         for (ASTMathOptimizationConditionExpression condition : conditions.getMathOptimizationConditionExpressions()) {
-            if (condition.getOperator().getOperator().isPresent()) {
-                MathCompareExpressionSymbol conditionSymbol = new MathCompareExpressionSymbol();
-                conditionSymbol.setOperator(condition.getOperator().getOperator().get());
-                if (condition.getLeftScalar().isPresent() && condition.getLeftScalar().get().getSymbol().isPresent()) {
-                    conditionSymbol.setLeftExpression((MathExpressionSymbol) condition.getLeftScalar().get().getSymbol().get());
-                } else if (condition.getLeftMatrix().isPresent() && condition.getLeftMatrix().get().getSymbol().isPresent()) {
-                    conditionSymbol.setLeftExpression((MathExpressionSymbol) condition.getLeftMatrix().get().getSymbol().get());
-                }
-                if (condition.getRightScalar().isPresent() && condition.getRightScalar().get().getSymbol().isPresent()) {
-                    conditionSymbol.setRightExpression((MathExpressionSymbol) condition.getRightScalar().get().getSymbol().get());
-                } else if (condition.getRightMatrix().isPresent() && condition.getRightMatrix().get().getSymbol().isPresent()) {
-                    conditionSymbol.setRightExpression((MathExpressionSymbol) condition.getRightMatrix().get().getSymbol().get());
-                }
+            if (condition.getSymbol().isPresent()) {
+                MathOptimizationConditionSymbol conditionSymbol = (MathOptimizationConditionSymbol) condition.getSymbol().get();
+                conditionSymbol.resolveBoundedExpressionToOptimizationVariable(symbol.getOptimizationVariable());
                 symbol.getSubjectToExpressions().add(conditionSymbol);
             }
         }

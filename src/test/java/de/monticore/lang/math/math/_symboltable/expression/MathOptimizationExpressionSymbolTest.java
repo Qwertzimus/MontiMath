@@ -33,6 +33,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
@@ -40,6 +41,8 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
     // fields
     protected MathOptimizationExpressionSymbol minimizationTestSymbol;
     protected MathOptimizationExpressionSymbol maximizationTestSymbol;
+    protected MathOptimizationExpressionSymbol lpTestSymbol;
+    protected MathOptimizationExpressionSymbol upperAndLowerBoundTestSymbol;
 
     @Override
     protected MathCoCoChecker getChecker() {
@@ -47,7 +50,7 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
     }
 
     // helper methods
-    protected MathOptimizationExpressionSymbol getMathOptimizationExpressionSymbolFromTestSkript(String pathToModel, int index) {
+    protected MathOptimizationExpressionSymbol getMathOptimizationExpressionSymbolFromTestScript(String pathToModel, int index) {
         // get all math expressions in script
         ASTMathCompilationUnit root = loadModel(pathToModel);
         List<ASTMathExpression> mathExpressions = root.getMathScript().getMathStatements().getMathExpressions();
@@ -58,8 +61,10 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
 
     @Before
     public void setUp() throws Exception {
-        minimizationTestSymbol = getMathOptimizationExpressionSymbolFromTestSkript("src/test/resources/optimization/MinimizationTest.m", 0);
-        maximizationTestSymbol = getMathOptimizationExpressionSymbolFromTestSkript("src/test/resources/optimization/MaximizationTest.m", 0);
+        minimizationTestSymbol = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/MinimizationTest.m", 0);
+        maximizationTestSymbol = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/MaximizationTest.m", 0);
+        lpTestSymbol = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/LpTest.m", 0);
+        upperAndLowerBoundTestSymbol = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/UpperAndLowerBoundTest.m", 0);
     }
 
     @Test
@@ -80,7 +85,9 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
 
     @Test
     public void getSubjectToExpressions() {
-        assertTrue(minimizationTestSymbol.getSubjectToExpressions().get(0).getTextualRepresentation().contentEquals("x<=1"));
+        assertTrue(minimizationTestSymbol.getSubjectToExpressions().get(0).getTextualRepresentation().replace(" ", "").contentEquals("x<=1"));
+        assertTrue(lpTestSymbol.getSubjectToExpressions().size() == 6);
+        assertTrue(upperAndLowerBoundTestSymbol.getSubjectToExpressions().size() == 2);
     }
 
 }

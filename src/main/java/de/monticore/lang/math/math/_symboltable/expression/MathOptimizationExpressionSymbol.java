@@ -20,6 +20,7 @@
  */
 package de.monticore.lang.math.math._symboltable.expression;
 
+import de.monticore.lang.math.math._symboltable.MathOptimizationConditionSymbol;
 import de.monticore.lang.math.math._symboltable.MathOptimizationType;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class MathOptimizationExpressionSymbol extends MathExpressionSymbol {
     /**
      * List of 0..n constraints
      */
-    private List<MathCompareExpressionSymbol> subjectToExpressions = new ArrayList<>();
+    private List<MathOptimizationConditionSymbol> subjectToExpressions = new ArrayList<>();
 
 
     //endregion
@@ -92,7 +93,7 @@ public class MathOptimizationExpressionSymbol extends MathExpressionSymbol {
         this.objectiveExpression = objectiveExpression;
     }
 
-    public List<MathCompareExpressionSymbol> getSubjectToExpressions() {
+    public List<MathOptimizationConditionSymbol> getSubjectToExpressions() {
         return subjectToExpressions;
     }
 
@@ -103,7 +104,7 @@ public class MathOptimizationExpressionSymbol extends MathExpressionSymbol {
         StringBuilder result = new StringBuilder(String.format("minimize(%s) /n", optimizationVariable.getTextualRepresentation()));
         result.append(String.format("%s /n", objectiveExpression.getTextualRepresentation()));
         result.append("subject to \n");
-        for (MathCompareExpressionSymbol symbol : subjectToExpressions) {
+        for (MathOptimizationConditionSymbol symbol : subjectToExpressions) {
             result.append(symbol.getTextualRepresentation()).append(";\n");
         }
         result.append("end;");

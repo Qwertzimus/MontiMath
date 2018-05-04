@@ -189,10 +189,11 @@ grammar Math extends de.monticore.lang.monticar.Common2, de.monticore.lang.monti
 
     MathOptimizationObjectiveFunctionExpression implements MathExpression = (MathAssignmentDeclarationExpression | MathArithmeticExpression ";");
 
-    MathOptimizationConditionOperator = operator:"==" | operator:"<=" | operator:">=";
+    MathOptimizationOperator = operator:"==" | operator:"<=" | operator:">=";
 
-    MathOptimizationConditionExpression implements MathExpression = (leftScalar:MathArithmeticExpression | leftMatrix:MathArithmeticMatrixExpression) NEWLINETOKEN* operator:MathOptimizationConditionOperator NEWLINETOKEN* (rightScalar:MathArithmeticExpression | rightMatrix:MathArithmeticMatrixExpression) ";";
-
+    MathOptimizationSimpleConditionExpression implements MathExpression<502> = left:MathArithmeticExpression NEWLINETOKEN* operator:MathOptimizationOperator NEWLINETOKEN* right:MathArithmeticExpression NEWLINETOKEN* ";";
+    MathOptimizationBoundsConditionExpression implements MathExpression<501> = lower:MathArithmeticExpression NEWLINETOKEN* "<=" expr:MathArithmeticExpression NEWLINETOKEN* "<=" NEWLINETOKEN* upper:MathArithmeticExpression ";";
+    MathOptimizationConditionExpression implements MathExpression = (MathOptimizationSimpleConditionExpression | MathOptimizationBoundsConditionExpression);
     MathOptimizationConditionExpressions implements MathExpression = (NEWLINETOKEN* (MathOptimizationConditionExpression) NEWLINETOKEN*)+;
 
     MathOptimizationExpression implements MathExpression = NEWLINETOKEN* MathOptimizationType "(" MathOptimizationVariableDeclarationExpression ")" NEWLINETOKEN+ MathOptimizationObjectiveFunctionExpression NEWLINETOKEN+ "subject to" NEWLINETOKEN+ MathOptimizationConditionExpressions NEWLINETOKEN+ "end" NEWLINETOKEN*;

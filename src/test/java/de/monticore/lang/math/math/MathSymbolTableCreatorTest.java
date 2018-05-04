@@ -328,7 +328,7 @@ public class MathSymbolTableCreatorTest {
         assertEquals(optRes, optSymbol.getObjectiveExpression());
         assertTrue(optSymbol.getOptimizationType() == MathOptimizationType.MINIMIZATION);
         assertTrue(optSymbol.getSubjectToExpressions().size() == 1);
-        assertTrue(optSymbol.getSubjectToExpressions().get(0).getTextualRepresentation().contentEquals("x<=1"));
+        assertTrue(optSymbol.getSubjectToExpressions().get(0).getTextualRepresentation().replace(" ", "").contentEquals("x<=1"));
     }
 
 }
