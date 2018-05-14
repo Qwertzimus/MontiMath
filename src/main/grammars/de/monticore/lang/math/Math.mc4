@@ -195,9 +195,8 @@ grammar Math extends de.monticore.lang.monticar.Common2, de.monticore.lang.monti
     MathOptimizationSimpleConditionExpression implements MathExpression<502> = left:MathArithmeticExpression NEWLINETOKEN* operator:MathOptimizationOperator NEWLINETOKEN* right:MathArithmeticExpression NEWLINETOKEN* ";";
     MathOptimizationBoundsConditionExpression implements MathExpression<501> = lower:MathArithmeticExpression NEWLINETOKEN* "<=" expr:MathArithmeticExpression NEWLINETOKEN* "<=" NEWLINETOKEN* upper:MathArithmeticExpression ";";
     MathOptimizationConditionExpression implements MathExpression = (MathOptimizationSimpleConditionExpression | MathOptimizationBoundsConditionExpression | MathOptimizationForLoopExpression);
-    MathOptimizationConditionExpressions extends MathExpressionsNewLineCompatible implements MathExpression = (NEWLINETOKEN* (MathOptimizationConditionExpression) NEWLINETOKEN*)+;
-    MathOptimizationForLoopExpression extends MathForLoopExpression implements MathExpression = NEWLINETOKEN* "for" head:MathForLoopHead NEWLINETOKEN* MathOptimizationConditionExpressions NEWLINETOKEN*  "end" NEWLINETOKEN*;
-
+    MathOptimizationConditionExpressions /* extends MathExpressionsNewLineCompatible */ implements MathExpression = (NEWLINETOKEN* (MathOptimizationConditionExpression) NEWLINETOKEN*)+;
+    MathOptimizationForLoopExpression /* extends MathForLoopExpression */ implements MathExpression = NEWLINETOKEN* "for" head:MathForLoopHead NEWLINETOKEN* body:MathOptimizationConditionExpressions NEWLINETOKEN*  "end" NEWLINETOKEN*;
 
     MathOptimizationExpression implements MathExpression = NEWLINETOKEN* MathOptimizationType "(" MathOptimizationVariableDeclarationExpression ")" NEWLINETOKEN+ MathOptimizationObjectiveFunctionExpression NEWLINETOKEN+ "subject to" NEWLINETOKEN+ MathOptimizationConditionExpressions NEWLINETOKEN+ "end" NEWLINETOKEN*;
 

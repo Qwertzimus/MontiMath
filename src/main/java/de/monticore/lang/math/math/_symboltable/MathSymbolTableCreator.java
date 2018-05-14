@@ -737,12 +737,12 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
     }
 
     public void endVisit(final ASTMathOptimizationForLoopExpression astExpression) {
-        if (astExpression instanceof ASTMathForLoopExpression) {
-            astExpression.setBody(astExpression.getMathOptimizationConditionExpressions());
-            for (ASTMathExpression astMathExpression : astExpression.getMathOptimizationConditionExpressions().getMathOptimizationConditionExpressions())
-                astExpression.getMathOptimizationConditionExpressions().getMathExpressions().add(astMathExpression);
-            endVisit((ASTMathForLoopExpression) astExpression);
-        }
+        MathForLoopExpressionSymbol symbol = new MathForLoopExpressionSymbol();
+
+        symbol.setForLoopHead((MathForLoopHeadSymbol) astExpression.getHead().getSymbol().get());
+        for (ASTMathExpression astMathExpression : astExpression.getBody().getMathOptimizationConditionExpressions())
+            symbol.addForLoopBody((MathExpressionSymbol) astMathExpression.getSymbol().get());
+        addToScopeAndLinkWithNode(symbol, astExpression);
     }
 
     public void endVisit(final ASTMathOptimizationConditionExpression astExpression) {
