@@ -736,9 +736,18 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
         addToScopeAndLinkWithNode(symbol, astExpression);
     }
 
+    public void endVisit(final ASTMathOptimizationForLoopExpression astExpression) {
+        if (astExpression instanceof ASTMathForLoopExpression) {
+            astExpression.setBody(astExpression.getMathOptimizationConditionExpressions());
+            for (ASTMathExpression astMathExpression : astExpression.getMathOptimizationConditionExpressions().getMathOptimizationConditionExpressions())
+                astExpression.getMathOptimizationConditionExpressions().getMathExpressions().add(astMathExpression);
+            endVisit((ASTMathForLoopExpression) astExpression);
+        }
+    }
+
     public void endVisit(final ASTMathOptimizationConditionExpression astExpression) {
 
-        MathOptimizationConditionSymbol symbol = null;
+        MathExpressionSymbol symbol = null;
 
         if (astExpression.getMathOptimizationSimpleConditionExpression().isPresent()) {
             ASTMathOptimizationSimpleConditionExpression simpleExpr = astExpression.getMathOptimizationSimpleConditionExpression().get();
@@ -755,6 +764,11 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
             MathExpressionSymbol upper = (MathExpressionSymbol) boundExpr.getUpper().getSymbol().orElse(null);
             if ((lower != null) && (expr != null) && (upper != null)) {
                 symbol = new MathOptimizationConditionSymbol(lower, expr, upper);
+            }
+        } else if (astExpression.getMathOptimizationForLoopExpression().isPresent()) {
+            ASTMathOptimizationForLoopExpression loopExpr = astExpression.getMathOptimizationForLoopExpression().get();
+            if (loopExpr.getSymbol().isPresent()) {
+                symbol = (MathExpressionSymbol) loopExpr.getSymbol().get();
             }
         }
 
@@ -775,8 +789,14 @@ public class MathSymbolTableCreator extends MathSymbolTableCreatorTOP {
         ASTMathOptimizationConditionExpressions conditions = astMathOptimizationExpression.getMathOptimizationConditionExpressions();
         for (ASTMathOptimizationConditionExpression condition : conditions.getMathOptimizationConditionExpressions()) {
             if (condition.getSymbol().isPresent()) {
-                MathOptimizationConditionSymbol conditionSymbol = (MathOptimizationConditionSymbol) condition.getSymbol().get();
-                conditionSymbol.resolveBoundedExpressionToOptimizationVariable(symbol.getOptimizationVariable());
+                MathExpressionSymbol conditionSymbol = (MathExpressionSymbol) condition.getSymbol().get();
+                if (conditionSymbol instanceof MathOptimizationConditionSymbol) {
+                    ((MathOptimizationConditionSymbol) conditionSymbol).resolveBoundedExpressionToOptimizationVariable(symbol.getOptimizationVariable());
+                } else if (conditionSymbol instanceof MathForLoopExpressionSymbol) {
+                    for (MathExpressionSymbol sym : ((MathForLoopExpressionSymbol) conditionSymbol).getForLoopBody())
+                        if (sym instanceof MathOptimizationConditionSymbol)
+                            ((MathOptimizationConditionSymbol) sym).resolveBoundedExpressionToOptimizationVariable(symbol.getOptimizationVariable());
+                }
                 symbol.getSubjectToExpressions().add(conditionSymbol);
             }
         }

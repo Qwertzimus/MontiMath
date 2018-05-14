@@ -43,6 +43,7 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
     protected MathOptimizationExpressionSymbol maximizationTestSymbol;
     protected MathOptimizationExpressionSymbol lpTestSymbol;
     protected MathOptimizationExpressionSymbol upperAndLowerBoundTestSymbol;
+    protected MathOptimizationExpressionSymbol forLoopConditionTestSymbol;
 
     @Override
     protected MathCoCoChecker getChecker() {
@@ -65,6 +66,7 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
         maximizationTestSymbol = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/MaximizationTest.m", 0);
         lpTestSymbol = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/LpTest.m", 0);
         upperAndLowerBoundTestSymbol = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/UpperAndLowerBoundTest.m", 0);
+        forLoopConditionTestSymbol = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/ForLoopConditionTest.m", 0);
     }
 
     @Test
@@ -88,6 +90,7 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
         assertTrue(minimizationTestSymbol.getSubjectToExpressions().get(0).getTextualRepresentation().replace(" ", "").contentEquals("x<=1"));
         assertTrue(lpTestSymbol.getSubjectToExpressions().size() == 6);
         assertTrue(upperAndLowerBoundTestSymbol.getSubjectToExpressions().size() == 2);
+        assertTrue(forLoopConditionTestSymbol.getSubjectToExpressions().size() >= 1);
     }
 
 }

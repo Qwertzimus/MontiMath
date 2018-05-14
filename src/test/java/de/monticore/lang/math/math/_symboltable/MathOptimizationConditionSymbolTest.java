@@ -21,7 +21,9 @@
 package de.monticore.lang.math.math._symboltable;
 
 import de.monticore.lang.math.math._symboltable.expression.MathExpressionSymbol;
+import de.monticore.lang.math.math._symboltable.expression.MathForLoopExpressionSymbol;
 import de.monticore.lang.math.math._symboltable.expression.MathOptimizationExpressionSymbolTest;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -33,42 +35,60 @@ import static org.junit.Assert.*;
  */
 public class MathOptimizationConditionSymbolTest extends MathOptimizationExpressionSymbolTest {
 
+    // condition symbols
+    protected MathOptimizationConditionSymbol minimizationTestConditionSymbol1;
+    protected MathOptimizationConditionSymbol lpTestConditionSymbol1;
+    protected MathOptimizationConditionSymbol upperAndLowerBoundTestConditionSymbol1;
+    protected MathOptimizationConditionSymbol upperAndLowerBoundTestConditionSymbol2;
+    protected MathForLoopExpressionSymbol forLoopConditionTestConditionSymbol;
+
+    @Override
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+        minimizationTestConditionSymbol1 = (MathOptimizationConditionSymbol) minimizationTestSymbol.getSubjectToExpressions().get(0);
+        lpTestConditionSymbol1 = (MathOptimizationConditionSymbol) lpTestSymbol.getSubjectToExpressions().get(0);
+        upperAndLowerBoundTestConditionSymbol1 = (MathOptimizationConditionSymbol) upperAndLowerBoundTestSymbol.getSubjectToExpressions().get(0);
+        upperAndLowerBoundTestConditionSymbol2 = (MathOptimizationConditionSymbol) upperAndLowerBoundTestSymbol.getSubjectToExpressions().get(1);
+        forLoopConditionTestConditionSymbol = (MathForLoopExpressionSymbol) forLoopConditionTestSymbol.getSubjectToExpressions().get(0);
+    }
+
     @Test
     public void getLowerBound() {
-        assertFalse(minimizationTestSymbol.getSubjectToExpressions().get(0).getLowerBound().isPresent());
-        assertTrue(lpTestSymbol.getSubjectToExpressions().get(0).getLowerBound().isPresent());
-        assertTrue(upperAndLowerBoundTestSymbol.getSubjectToExpressions().get(0).getLowerBound().isPresent());
-        assertTrue(upperAndLowerBoundTestSymbol.getSubjectToExpressions().get(1).getLowerBound().isPresent());
+        assertFalse(minimizationTestConditionSymbol1.getLowerBound().isPresent());
+        assertTrue(lpTestConditionSymbol1.getLowerBound().isPresent());
+        assertTrue(upperAndLowerBoundTestConditionSymbol1.getLowerBound().isPresent());
+        assertTrue(upperAndLowerBoundTestConditionSymbol2.getLowerBound().isPresent());
     }
 
     @Test
     public void getUpperBound() {
-        assertTrue(minimizationTestSymbol.getSubjectToExpressions().get(0).getUpperBound().isPresent());
-        assertTrue(lpTestSymbol.getSubjectToExpressions().get(0).getUpperBound().isPresent());
-        assertTrue(upperAndLowerBoundTestSymbol.getSubjectToExpressions().get(0).getUpperBound().isPresent());
-        assertFalse(upperAndLowerBoundTestSymbol.getSubjectToExpressions().get(1).getUpperBound().isPresent());
+        assertTrue(minimizationTestConditionSymbol1.getUpperBound().isPresent());
+        assertTrue(lpTestConditionSymbol1.getUpperBound().isPresent());
+        assertTrue(upperAndLowerBoundTestConditionSymbol1.getUpperBound().isPresent());
+        assertFalse(upperAndLowerBoundTestConditionSymbol2.getUpperBound().isPresent());
     }
 
     @Test
     public void getBoundedExpression() {
-        assertTrue(minimizationTestSymbol.getSubjectToExpressions().get(0).getBoundedExpression().getTextualRepresentation().contains("x"));
-        assertTrue(lpTestSymbol.getSubjectToExpressions().get(0).getBoundedExpression().getTextualRepresentation().contains("x"));
-        assertTrue(upperAndLowerBoundTestSymbol.getSubjectToExpressions().get(0).getBoundedExpression().getTextualRepresentation().contains("x"));
-        assertTrue(upperAndLowerBoundTestSymbol.getSubjectToExpressions().get(1).getBoundedExpression().getTextualRepresentation().contains("x"));
+        assertTrue(minimizationTestConditionSymbol1.getBoundedExpression().getTextualRepresentation().contains("x"));
+        assertTrue(lpTestConditionSymbol1.getBoundedExpression().getTextualRepresentation().contains("x"));
+        assertTrue(upperAndLowerBoundTestConditionSymbol1.getBoundedExpression().getTextualRepresentation().contains("x"));
+        assertTrue(upperAndLowerBoundTestConditionSymbol2.getBoundedExpression().getTextualRepresentation().contains("x"));
     }
 
     @Test
     public void testBoundsEqual() {
-        MathOptimizationConditionSymbol condition1 = upperAndLowerBoundTestSymbol.getSubjectToExpressions().get(0);
+        MathOptimizationConditionSymbol condition1 = upperAndLowerBoundTestConditionSymbol1;
         assertNotEquals(condition1.getLowerBound().get(), condition1.getUpperBound().get());
-        MathOptimizationConditionSymbol condition2 = lpTestSymbol.getSubjectToExpressions().get(0);
+        MathOptimizationConditionSymbol condition2 = lpTestConditionSymbol1;
         assertEquals(condition2.getLowerBound().get(), condition2.getUpperBound().get());
     }
 
     @Test
     public void resolveBoundedExpressionToOptimizationVariable() {
-        MathExpressionSymbol bound = minimizationTestSymbol.getSubjectToExpressions().get(0).getUpperBound().get();
-        MathExpressionSymbol expr = minimizationTestSymbol.getSubjectToExpressions().get(0).getBoundedExpression();
+        MathExpressionSymbol bound = minimizationTestConditionSymbol1.getUpperBound().get();
+        MathExpressionSymbol expr = minimizationTestConditionSymbol1.getBoundedExpression();
         resolveBoundedExpressionToOptimizationVariableForOperator(bound, expr, "<=");
         resolveBoundedExpressionToOptimizationVariableForOperator(expr, bound, "<=");
         resolveBoundedExpressionToOptimizationVariableForOperator(bound, expr, "==");
@@ -81,5 +101,14 @@ public class MathOptimizationConditionSymbolTest extends MathOptimizationExpress
         MathOptimizationConditionSymbol symbol = new MathOptimizationConditionSymbol(bound, op, expr);
         symbol.resolveBoundedExpressionToOptimizationVariable(minimizationTestSymbol.getOptimizationVariable());
         assertTrue(symbol.getBoundedExpression().getTextualRepresentation().contains(minimizationTestSymbol.getOptimizationVariable().getName()));
+    }
+
+    @Test
+    public void testForLoopConditions() {
+        assertNotNull(forLoopConditionTestConditionSymbol);
+        for (MathExpressionSymbol symbol: forLoopConditionTestConditionSymbol.getForLoopBody()) {
+            assertTrue(symbol instanceof MathOptimizationConditionSymbol);
+        }
+        assertTrue(forLoopConditionTestConditionSymbol.getForLoopBody().size() == 2);
     }
 }

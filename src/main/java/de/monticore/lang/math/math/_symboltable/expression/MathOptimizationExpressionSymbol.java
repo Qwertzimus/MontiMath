@@ -48,7 +48,7 @@ public class MathOptimizationExpressionSymbol extends MathExpressionSymbol {
     /**
      * List of 0..n constraints
      */
-    private List<MathOptimizationConditionSymbol> subjectToExpressions = new ArrayList<>();
+    private List<MathExpressionSymbol> subjectToExpressions = new ArrayList<>();
 
 
     //endregion
@@ -93,7 +93,7 @@ public class MathOptimizationExpressionSymbol extends MathExpressionSymbol {
         this.objectiveExpression = objectiveExpression;
     }
 
-    public List<MathOptimizationConditionSymbol> getSubjectToExpressions() {
+    public List<MathExpressionSymbol> getSubjectToExpressions() {
         return subjectToExpressions;
     }
 
@@ -104,7 +104,7 @@ public class MathOptimizationExpressionSymbol extends MathExpressionSymbol {
         StringBuilder result = new StringBuilder(String.format("minimize(%s) /n", optimizationVariable.getTextualRepresentation()));
         result.append(String.format("%s /n", objectiveExpression.getTextualRepresentation()));
         result.append("subject to \n");
-        for (MathOptimizationConditionSymbol symbol : subjectToExpressions) {
+        for (MathExpressionSymbol symbol : subjectToExpressions) {
             result.append(symbol.getTextualRepresentation()).append(";\n");
         }
         result.append("end;");
