@@ -186,7 +186,7 @@ grammar Math extends de.monticore.lang.monticar.Common2, de.monticore.lang.monti
     enum MathOptimizationType = MINIMIZATION: "minimize" | MAXIMIZATION: "maximize";
 
     // could extend MathDeclarationExpression, but will not work because of a bug in MontiCore
-    MathOptimizationVariableDeclarationExpression implements MathExpression = NEWLINETOKEN* type:AssignmentType  Name NEWLINETOKEN*;
+    MathOptimizationVariableDeclarationExpression implements MathExpression = NEWLINETOKEN* type:AssignmentType?  Name NEWLINETOKEN*;
 
     MathOptimizationObjectiveFunctionExpression implements MathExpression = (MathAssignmentDeclarationExpression | MathArithmeticExpression ";");
 

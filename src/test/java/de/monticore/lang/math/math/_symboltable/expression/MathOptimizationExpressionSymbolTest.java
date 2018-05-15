@@ -32,9 +32,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
 
@@ -44,6 +42,9 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
     protected MathOptimizationExpressionSymbol lpTestSymbol;
     protected MathOptimizationExpressionSymbol upperAndLowerBoundTestSymbol;
     protected MathOptimizationExpressionSymbol forLoopConditionTestSymbol;
+    protected MathOptimizationExpressionSymbol existingOptimizationVarScalar;
+    protected MathOptimizationExpressionSymbol existingOptimizationVarMatrix;
+    protected MathOptimizationExpressionSymbol existingOptimizationVarSubstituted;
 
     @Override
     protected MathCoCoChecker getChecker() {
@@ -67,6 +68,9 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
         lpTestSymbol = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/LpTest.m", 0);
         upperAndLowerBoundTestSymbol = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/UpperAndLowerBoundTest.m", 0);
         forLoopConditionTestSymbol = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/ForLoopConditionTest.m", 0);
+        existingOptimizationVarScalar = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/ExistingOptimizationVariable.m", 0);
+        existingOptimizationVarMatrix = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/ExistingOptimizationVariable.m", 1);
+        existingOptimizationVarSubstituted = getMathOptimizationExpressionSymbolFromTestScript("src/test/resources/optimization/ExistingOptimizationVariable.m", 2);
     }
 
     @Test
@@ -78,6 +82,13 @@ public class MathOptimizationExpressionSymbolTest extends AbstractMathChecker {
     @Test
     public void getOptimizationVariable() {
         assertTrue(minimizationTestSymbol.getOptimizationVariable().getName().contentEquals("x"));
+        assertNotNull(minimizationTestSymbol.getOptimizationVariable().getType());
+        assertTrue(existingOptimizationVarScalar.getOptimizationVariable().getName().contentEquals("x"));
+        assertNull(existingOptimizationVarScalar.getOptimizationVariable().getType());
+        assertTrue(existingOptimizationVarMatrix.getOptimizationVariable().getName().contentEquals("a"));
+        assertNull(existingOptimizationVarMatrix.getOptimizationVariable().getType());
+        assertTrue(existingOptimizationVarSubstituted.getOptimizationVariable().getName().contentEquals("a"));
+        assertNull(existingOptimizationVarSubstituted.getOptimizationVariable().getType());
     }
 
     @Test
