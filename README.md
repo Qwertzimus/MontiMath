@@ -4,3 +4,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/EmbeddedMontiArc/MontiMath/badge.svg?branch=master)](https://coveralls.io/github/EmbeddedMontiArc/MontiMath?branch=master)
 
 # MontiMath
+
+* please use new version of grammer: https://github.com/EmbeddedMontiArc/MontiMath/tree/nina-improve_grammar/src/main/grammars/de/monticore/lang
+    * the new grammer uses a new MontiCore version, you need to refactor some methods (for questions please ask Nina in a personal meeting)
+* and extend the grammar by creating a new `.mc4` file which extends the `Math.mc4` file, so that your extension can be used optional and is not default enabled in `EMAM`
+    * for information about it see the MontiCore book of the SLE lecture
