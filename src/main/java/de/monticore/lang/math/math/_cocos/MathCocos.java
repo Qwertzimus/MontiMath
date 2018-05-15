@@ -28,7 +28,8 @@ public class MathCocos {
     public static MathCoCoChecker createChecker() {
         return new MathCoCoChecker()
                 .addCoCo(new MatrixAssignmentDeclarationCheck())
-                .addCoCo(new MatrixAssignmentCheck());
+                .addCoCo(new MatrixAssignmentCheck())
+                .addCoCo(new OptimizationExpressionCheck());
                     //.addCoCo(new DimensionEquals())
                     //.addCoCo(new ArithmeticMatrixExpressionCheck())
                     //.addCoCo(new MatrixUnitCheck())
